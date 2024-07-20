@@ -1,14 +1,14 @@
 import logo from "./logo.svg";
 import "./App.css";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import FunctionComponent from "./components/FunctionComponent";
+import ClassComponent from "./components/ClassComponents";
+import MainPage from "./pages/MainPage";
 
 function App() {
     return (
         <>
-            <Navbar />
-            <img src={logo}/>
-            <Footer />
+            <MainPage />
         </>
     );
 }
