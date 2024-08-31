@@ -1,6 +1,6 @@
-import Navbar from "../components/Navbar";
-import FunctionComponent from "../components/FunctionComponent";
-import ClassComponent from "../components/ClassComponents";
+import Navbar from "../../components/Navbar";
+import FunctionComponent from "../../components/FunctionComponent";
+import ClassComponent from "../../components/ClassComponents";
 import { Box } from "@mui/material";
 import { useState } from "react";
 import "./MainPage.css";
