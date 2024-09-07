@@ -36,42 +36,36 @@ function NewsPage() {
 
     return (
         <>
-            <Navbar />
-            <Container>
-                <h1>News Page</h1>
+            <h1>News Page</h1>
 
-                <Grid container gap={4}>
-                    {news.map((item) => (
-                        <Card xs={4} sx={{ maxWidth: 345 }}>
-                            <CardMedia
-                                sx={{ height: 140 }}
-                                image={item.urlToImage}
-                                title="green iguana"
-                            />
-                            <CardContent>
-                                <Typography
-                                    gutterBottom
-                                    variant="h5"
-                                    component="div"
-                                >
-                                    {item.title}
-                                </Typography>
-                                <Typography
-                                    variant="body2"
-                                    color="text.secondary"
-                                >
-                                    {item.description}
-                                </Typography>
-                            </CardContent>
-                            <CardActions>
-                                <Button size="small">
-                                    <a href={item.url}>Learn More</a>
-                                </Button>
-                            </CardActions>
-                        </Card>
-                    ))}
-                </Grid>
-            </Container>
+            <Grid container gap={4}>
+                {news.map((item) => (
+                    <Card xs={4} sx={{ maxWidth: 345 }}>
+                        <CardMedia
+                            sx={{ height: 140 }}
+                            image={item.urlToImage}
+                            title="green iguana"
+                        />
+                        <CardContent>
+                            <Typography
+                                gutterBottom
+                                variant="h5"
+                                component="div"
+                            >
+                                {item.title}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                {item.description}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button size="small">
+                                <a href={item.url}>Learn More</a>
+                            </Button>
+                        </CardActions>
+                    </Card>
+                ))}
+            </Grid>
         </>
     );
 }

@@ -12,8 +12,13 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { Link } from "react-router-dom";
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = [
+    { id: 1, name: "Main", url: "/" },
+    { id: 2, name: "News", url: "/news" },
+    { id: 3, name: "Weather", url: "/weather" },
+];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function Navbar() {
@@ -96,14 +101,15 @@ function Navbar() {
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem
-                                    key={page}
-                                    onClick={handleCloseNavMenu}
-                                >
-                                    <Typography textAlign="center">
-                                        {page}
-                                    </Typography>
-                                </MenuItem>
+                                <Link to={page.url} key={page.id}>
+                                    <MenuItem
+                                        onClick={handleCloseNavMenu}
+                                    >
+                                        <Typography textAlign="center">
+                                            {page.name}
+                                        </Typography>
+                                    </MenuItem>
+                                </Link>
                             ))}
                         </Menu>
                     </Box>
@@ -135,20 +141,29 @@ function Navbar() {
                         }}
                     >
                         {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: "white", display: "block" }}
-                            >
-                                {page}
-                            </Button>
+                            <Link to={page.url} key={page.id}>
+                                <Button
+                                    onClick={handleCloseNavMenu}
+                                    sx={{
+                                        my: 2,
+                                        color: "white",
+                                        display: "block",
+                                    }}
+                                >
+                                    {page.name}
+                                </Button>
+                            </Link>
                         ))}
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Button sx={{color: "white", mr: 2}}>Sign in</Button>
-                        <Button sx={{color: "white", mr: 2}}>Sign up</Button>
-                        <Tooltip title="Open settings">
+                        <Link to="/login">
+                            <Button sx={{ color: "white", mr: 2 }}>Sign in</Button>
+                        </Link>
+                        <Link to="/register">
+                            <Button sx={{ color: "white", mr: 2 }}>Sign up</Button>
+                        </Link>
+                        {/* <Tooltip title="Open settings">
                             <IconButton
                                 onClick={handleOpenUserMenu}
                                 sx={{ p: 0 }}
@@ -185,7 +200,7 @@ function Navbar() {
                                     </Typography>
                                 </MenuItem>
                             ))}
-                        </Menu>
+                        </Menu> */}
                     </Box>
                 </Toolbar>
             </Container>

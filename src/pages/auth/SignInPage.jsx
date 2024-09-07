@@ -7,15 +7,17 @@ import {
     TextField,
     FormControlLabel,
     Checkbox,
-    Link,
     Container,
     Typography,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useFormik } from "formik";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 function SignInPage() {
+    const navigate = useNavigate();
+
     const initFormValues = {
         email: "",
         password: "",
@@ -43,6 +45,7 @@ function SignInPage() {
     function submitHandler(values) {
         const json = JSON.stringify(values);
         localStorage.setItem("auth", json);
+        navigate("/")
     }
 
     // create formik
@@ -120,7 +123,7 @@ function SignInPage() {
                     </Button>
                     <Grid container>
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link to="/register">
                                 {"Don't have an account? Sign Up"}
                             </Link>
                         </Grid>

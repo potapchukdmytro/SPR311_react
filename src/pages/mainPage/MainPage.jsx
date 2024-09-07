@@ -48,7 +48,6 @@ function MainPage() {
 
     return (
         <>
-            <Navbar />
             {/* <Box sx={{textAlign: "center", mt: 3}}>
                 <img width="800px" src="https://kinsta.com/wp-content/uploads/2023/04/react-must-be-in-scope-when-using-jsx.jpg"/>
             </Box>
