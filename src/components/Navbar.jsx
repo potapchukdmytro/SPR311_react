@@ -13,6 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const pages = [
     { id: 1, name: "Main", url: "/" },
@@ -24,6 +25,9 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+    // отримання даних зі store
+    const { isAuth, email } = useSelector((store) => store.authReducer);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -102,9 +106,7 @@ function Navbar() {
                         >
                             {pages.map((page) => (
                                 <Link to={page.url} key={page.id}>
-                                    <MenuItem
-                                        onClick={handleCloseNavMenu}
-                                    >
+                                    <MenuItem onClick={handleCloseNavMenu}>
                                         <Typography textAlign="center">
                                             {page.name}
                                         </Typography>
@@ -156,14 +158,41 @@ function Navbar() {
                         ))}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Link to="/login">
-                            <Button sx={{ color: "white", mr: 2 }}>Sign in</Button>
-                        </Link>
-                        <Link to="/register">
-                            <Button sx={{ color: "white", mr: 2 }}>Sign up</Button>
-                        </Link>
-                        {/* <Tooltip title="Open settings">
+                    {isAuth == false ? (
+                        <Box sx={{ flexGrow: 0 }}>
+                            <Link to="/login">
+                                <Button sx={{ color: "white", mr: 2 }}>
+                                    Sign in
+                                </Button>
+                            </Link>
+                            <Link to="/register">
+                                <Button sx={{ color: "white", mr: 2 }}>
+                                    Sign up
+                                </Button>
+                            </Link>
+                        </Box>
+                    ) : (
+                        <Box sx={{ flexGrow: 0 }}>
+                            <Link to="/profile">
+                                <Button sx={{ color: "white", mr: 2 }}>
+                                    {email}
+                                </Button>
+                            </Link>
+                            <Button sx={{ color: "white", mr: 2 }}>
+                                Logout
+                            </Button>
+                        </Box>
+                    )}
+                </Toolbar>
+            </Container>
+        </AppBar>
+    );
+}
+
+export default Navbar;
+
+{
+    /* <Tooltip title="Open settings">
                             <IconButton
                                 onClick={handleOpenUserMenu}
                                 sx={{ p: 0 }}
@@ -200,12 +229,5 @@ function Navbar() {
                                     </Typography>
                                 </MenuItem>
                             ))}
-                        </Menu> */}
-                    </Box>
-                </Toolbar>
-            </Container>
-        </AppBar>
-    );
+                        </Menu> */
 }
-
-export default Navbar;

@@ -11,8 +11,17 @@ import DefaultLayout from "./components/layouts/DefaultLayout";
 import NotFoundPage from "./pages/NotFoundPage";
 import SignUpPage from "./pages/auth/SignUpPage";
 import WeatherPage from "./pages/weatherPage/WeatherPage";
+import { useDispatch } from "react-redux";
 
 function App() {
+    const auth = localStorage.getItem("auth");
+    const dispatch = useDispatch();
+
+    if(auth != null) {
+        const user = JSON.parse(auth);
+        dispatch({type: "SIGN_IN", payload: user.email});
+    }
+
     return (
         <div>
             <Routes>
