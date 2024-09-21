@@ -14,11 +14,11 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import { useAction } from "../../hooks/useAction";
 
 function SignInPage() {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const { signIn } = useAction();
 
     const initFormValues = {
         email: "",
@@ -45,12 +45,7 @@ function SignInPage() {
     });
 
     function submitHandler(values) {
-        const json = JSON.stringify(values);
-        localStorage.setItem("auth", json);
-
-        const email = values.email;
-        dispatch({ type: "SIGN_IN", payload: email });
-
+        signIn(values); 
         navigate("/")
     }
 

@@ -7,41 +7,41 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useAction } from "../hooks/useAction";
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 const pages = [
     { id: 1, name: "Main", url: "/" },
     { id: 2, name: "News", url: "/news" },
     { id: 3, name: "Weather", url: "/weather" },
 ];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
 
     // отримання даних зі store
     const { isAuth, email } = useSelector((store) => store.authReducer);
+    const { logout, switchTheme } = useAction();
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
     };
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
+    const logoutHandler = () => {
+        logout();
+    };
+
+    const switchThemeHandler = () => {
+        switchTheme();
     };
 
     return (
@@ -156,8 +156,8 @@ function Navbar() {
                                 </Button>
                             </Link>
                         ))}
-                    </Box>
-
+                    </Box>                       
+                        <DarkModeIcon onClick={switchThemeHandler} sx={{cursor: "pointer"}}/>
                     {isAuth == false ? (
                         <Box sx={{ flexGrow: 0 }}>
                             <Link to="/login">
@@ -178,7 +178,7 @@ function Navbar() {
                                     {email}
                                 </Button>
                             </Link>
-                            <Button sx={{ color: "white", mr: 2 }}>
+                            <Button onClick={logoutHandler} sx={{ color: "white", mr: 2 }}>
                                 Logout
                             </Button>
                         </Box>
@@ -190,44 +190,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
-{
-    /* <Tooltip title="Open settings">
-                            <IconButton
-                                onClick={handleOpenUserMenu}
-                                sx={{ p: 0 }}
-                            >
-                                <Avatar
-                                    alt="Remy Sharp"
-                                    src="/static/images/avatar/2.jpg"
-                                />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: "45px" }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem
-                                    key={setting}
-                                    onClick={handleCloseUserMenu}
-                                >
-                                    <Typography textAlign="center">
-                                        {setting}
-                                    </Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu> */
-}

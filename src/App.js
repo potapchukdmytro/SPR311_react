@@ -11,29 +11,37 @@ import DefaultLayout from "./components/layouts/DefaultLayout";
 import NotFoundPage from "./pages/NotFoundPage";
 import SignUpPage from "./pages/auth/SignUpPage";
 import WeatherPage from "./pages/weatherPage/WeatherPage";
-import { useDispatch } from "react-redux";
+import { useAction } from "./hooks/useAction";
+import { ThemeProvider } from "@mui/material";
+import { darkTheme, lightTheme } from "./theming/themes";
+import { useSelector } from "react-redux";
+
 
 function App() {
-    const auth = localStorage.getItem("auth");
-    const dispatch = useDispatch();
+    const { loginByLocalStorage } = useAction();
+    const { isDark } = useSelector(store => store.themeReducer);
 
-    if(auth != null) {
-        const user = JSON.parse(auth);
-        dispatch({type: "SIGN_IN", payload: user.email});
+    loginByLocalStorage();
+
+    let currentTheme = lightTheme;
+    if(isDark) {
+        currentTheme = darkTheme;
     }
 
     return (
         <div>
-            <Routes>
-                <Route path="/" element={<DefaultLayout />}>
-                    <Route index element={<MainPage />} />
-                    <Route path="/news" element={<NewsPage />} />
-                    <Route path="/login" element={<SignInPage />} />
-                    <Route path="/register" element={<SignUpPage />} />
-                    <Route path="/weather" element={<WeatherPage />} />
-                    <Route path="*" element={<NotFoundPage />} />
-                </Route>
-            </Routes>
+            <ThemeProvider theme={currentTheme}>
+                <Routes>
+                    <Route path="/" element={<DefaultLayout />}>
+                        <Route index element={<MainPage />} />
+                        <Route path="/news" element={<NewsPage />} />
+                        <Route path="/login" element={<SignInPage />} />
+                        <Route path="/register" element={<SignUpPage />} />
+                        <Route path="/weather" element={<WeatherPage />} />
+                        <Route path="*" element={<NotFoundPage />} />
+                    </Route>
+                </Routes>
+            </ThemeProvider>
         </div>
     );
 }
