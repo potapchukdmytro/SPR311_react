@@ -25,7 +25,7 @@ function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 
     // отримання даних зі store
-    const { isAuth, email } = useSelector((store) => store.authReducer);
+    const { isAuth, user } = useSelector((store) => store.authReducer);
     const { logout, switchTheme } = useAction();
 
     const handleOpenNavMenu = (event) => {
@@ -175,7 +175,7 @@ function Navbar() {
                         <Box sx={{ flexGrow: 0 }}>
                             <Link to="/profile">
                                 <Button sx={{ color: "white", mr: 2 }}>
-                                    {email}
+                                    {user.email}
                                 </Button>
                             </Link>
                             <Button onClick={logoutHandler} sx={{ color: "white", mr: 2 }}>

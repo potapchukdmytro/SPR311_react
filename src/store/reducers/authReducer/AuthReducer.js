@@ -1,14 +1,14 @@
 const initAuthState = {
     isAuth: false,
-    email: null
+    user: null
 };
 
 const AuthReducer = (state = initAuthState, action) => {
     switch(action.type) {
         case "SIGN_IN":
-            return { ...state, isAuth: true, email: action.payload };
+            return { ...state, isAuth: true, user: action.payload };
         case "LOGOUT":
-            return { ...state, isAuth: false, email: null };
+            return { ...state, isAuth: false, user: null };
         default:
             return state;
     }

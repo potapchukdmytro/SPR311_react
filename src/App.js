@@ -18,10 +18,12 @@ import { useSelector } from "react-redux";
 
 
 function App() {
-    const { loginByLocalStorage } = useAction();
+    const { googleLogin } = useAction();
     const { isDark } = useSelector(store => store.themeReducer);
 
-    loginByLocalStorage();
+    if(localStorage.getItem("oauth") != null) {
+        googleLogin(localStorage.getItem("oauth"));
+    }
 
     let currentTheme = lightTheme;
     if(isDark) {
