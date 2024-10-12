@@ -17,6 +17,7 @@ import { darkTheme, lightTheme } from "./theming/themes";
 import { useSelector } from "react-redux";
 import "./localization/config";
 import axios from "axios";
+import UsersPage from "./pages/users/UsersPage";
 
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
                         <Route path="/login" element={<SignInPage />} />
                         <Route path="/register" element={<SignUpPage />} />
                         <Route path="/weather" element={<WeatherPage />} />
+                        <Route path="/users" element={<UsersPage />} />
                         <Route path="*" element={<NotFoundPage />} />
                     </Route>
                 </Routes>
