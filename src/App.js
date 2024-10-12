@@ -15,6 +15,7 @@ import { useAction } from "./hooks/useAction";
 import { ThemeProvider } from "@mui/material";
 import { darkTheme, lightTheme } from "./theming/themes";
 import { useSelector } from "react-redux";
+import "./localization/config";
 
 
 function App() {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,20 +9,32 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
+import { Select } from "@mui/material";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useAction } from "../hooks/useAction";
-import DarkModeIcon from '@mui/icons-material/DarkMode';
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import { useTranslation } from "react-i18next";
+import { changeLanguage } from "i18next";
+import languages from "../localization/languages.json";
 
 const pages = [
-    { id: 1, name: "Main", url: "/" },
-    { id: 2, name: "News", url: "/news" },
-    { id: 3, name: "Weather", url: "/weather" },
+    { id: 1, name: "navbar_main_page", url: "/" },
+    { id: 2, name: "navbar_news_page", url: "/news" },
+    { id: 3, name: "navbar_weather_page", url: "/weather" },
 ];
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
+
+    // localiation
+    const { t, i18n } = useTranslation();
+
+    const changeLanguageHandler = (lang) => {
+        changeLanguage(lang.key);
+        localStorage.setItem("lang", lang.key);
+    };
 
     // отримання даних зі store
     const { isAuth, user } = useSelector((store) => store.authReducer);
@@ -43,6 +55,13 @@ function Navbar() {
     const switchThemeHandler = () => {
         switchTheme();
     };
+
+    useEffect(() => {
+        const langLocal = localStorage.getItem("lang");
+        if (langLocal != null) {
+            changeLanguage(langLocal);
+        }
+    }, []);
 
     return (
         // mui: sx == style
@@ -108,7 +127,7 @@ function Navbar() {
                                 <Link to={page.url} key={page.id}>
                                     <MenuItem onClick={handleCloseNavMenu}>
                                         <Typography textAlign="center">
-                                            {page.name}
+                                            {t(page.name)}
                                         </Typography>
                                     </MenuItem>
                                 </Link>
@@ -152,22 +171,41 @@ function Navbar() {
                                         display: "block",
                                     }}
                                 >
-                                    {page.name}
+                                    {t(page.name)}
                                 </Button>
                             </Link>
                         ))}
-                    </Box>                       
-                        <DarkModeIcon onClick={switchThemeHandler} sx={{cursor: "pointer"}}/>
+                    </Box>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={i18n.language}
+                    >
+                        {languages.map((lang) => (
+                            <MenuItem
+                                key={lang.key}
+                                value={lang.key}
+                                onClick={() => changeLanguageHandler(lang)}
+                            >
+                                {lang.name}
+                            </MenuItem>
+                        ))}
+                    </Select>
+
+                    <DarkModeIcon
+                        onClick={switchThemeHandler}
+                        sx={{ cursor: "pointer" }}
+                    />
                     {isAuth == false ? (
                         <Box sx={{ flexGrow: 0 }}>
                             <Link to="/login">
                                 <Button sx={{ color: "white", mr: 2 }}>
-                                    Sign in
+                                    {t("navbar_signin")}
                                 </Button>
                             </Link>
                             <Link to="/register">
                                 <Button sx={{ color: "white", mr: 2 }}>
-                                    Sign up
+                                    {t("navbar_signup")}
                                 </Button>
                             </Link>
                         </Box>
@@ -178,8 +216,11 @@ function Navbar() {
                                     {user.email}
                                 </Button>
                             </Link>
-                            <Button onClick={logoutHandler} sx={{ color: "white", mr: 2 }}>
-                                Logout
+                            <Button
+                                onClick={logoutHandler}
+                                sx={{ color: "white", mr: 2 }}
+                            >
+                                {t("navbar_logout")}
                             </Button>
                         </Box>
                     )}

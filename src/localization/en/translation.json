@@ -1,0 +1,8 @@
+{
+    "navbar_main_page": "Main",
+    "navbar_news_page": "News",
+    "navbar_weather_page": "Weather",
+    "navbar_logout": "Logout",
+    "navbar_signin": "Sign in",
+    "navbar_signup": "Sign up"
+}
