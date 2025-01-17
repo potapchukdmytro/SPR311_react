@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import "./localization/config";
 import axios from "axios";
 import UsersPage from "./pages/users/UsersPage";
+import { Button } from 'primereact/button';
 
 
 function App() {
@@ -72,6 +73,7 @@ function App() {
 
     return (
         <div>
+            <Button label="Submit" />
             <ThemeProvider theme={currentTheme}>
                 <Routes>
                     <Route path="/" element={<DefaultLayout />}>
